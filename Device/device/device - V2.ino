@@ -27,7 +27,7 @@ int redLed = 4;
 int in1 = 5;  // IN1
 int in2 = 6;  // IN2
 int en1 = 10;
-unsigned int a,b,val;
+unsigned int a, b, val;
 void setup () {
   Serial.begin(9600);  // We initialize serial connection so that we could print values from sensor.
   BT.begin(9600);// We initialize bluetooth module.
@@ -75,23 +75,23 @@ void loop () {
     }
 
   }
-    //Auto mode
-    if ((moisture_percentage < 60) && (distance_percentage > 20)) {
-      analogWrite(en1, 100);
-      digitalWrite(in2, 1);
-    }
-    if ((moisture_percentage < 60) && (distance_percentage < 20)) {
-      analogWrite(en1, 0);
-      digitalWrite(in2, 0);
-    }
-    if ((moisture_percentage > 60) && (distance_percentage > 20)) {
-      analogWrite(en1, 0);
-      digitalWrite(in2, 0);
-    }
-    if ((moisture_percentage > 60) && (distance_percentage < 20)) {
-      analogWrite(en1, 0);
-      digitalWrite(in2, 0);
-    }
+  //Auto mode
+  if ((moisture_percentage < 60) && (distance_percentage < 80)) {
+    analogWrite(en1, 100);
+    digitalWrite(in2, 1);
+  }
+  if ((moisture_percentage < 60) && (distance_percentage > 80)) {
+    analogWrite(en1, 0);
+    digitalWrite(in2, 0);
+  }
+  if ((moisture_percentage > 60) && (distance_percentage > 80)) {
+    analogWrite(en1, 0);
+    digitalWrite(in2, 0);
+  }
+  if ((moisture_percentage > 60) && (distance_percentage < 80)) {
+    analogWrite(en1, 0);
+    digitalWrite(in2, 0);
+  }
 
   //Data stransfering to Android app
   BT.print(distance_percentage);
@@ -123,9 +123,9 @@ void loop () {
   // Check water tank level + LED notification
   if (distance >= 13 && distance <= 18) {
     //Serial.print("High");
-    digitalWrite(greenLed, HIGH);
+    digitalWrite(greenLed, LOW);
     digitalWrite(yellowLed, LOW);
-    digitalWrite(redLed, LOW);
+    digitalWrite(redLed, HIGH);
   }
   if (distance >= 7 && distance <= 12) {
     //Serial.print("Moderate");
@@ -135,8 +135,8 @@ void loop () {
   }
   if (distance >= 1 && distance <= 6) {
     //Serial.print("Low");
-    digitalWrite(greenLed, LOW);
+    digitalWrite(greenLed, HIGH);
     digitalWrite(yellowLed, LOW);
-    digitalWrite(redLed, HIGH);
+    digitalWrite(redLed, LOW);
   }
 }
